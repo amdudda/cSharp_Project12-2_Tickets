@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace Tickets
 {
-    public class Validator
+    public static class Validator
     {
-        public bool IsPresent(TextBox tbox)
+        public static bool IsPresent(TextBox tbox)
         {
             if (tbox.Text == "")
             {
@@ -20,11 +20,11 @@ namespace Tickets
             else return true;
         }
 
-        public bool IsInteger(TextBox tbox) 
+        public static bool IsInteger(TextBox tbox) 
         {
             string toParse = tbox.Text;
-            short whatevs;
-            if (!(Int16.TryParse(toParse, out whatevs)) || whatevs < 1)
+            int whatevs;
+            if (!(Int32.TryParse(toParse, out whatevs)) || whatevs < 1)
             {
                 MessageBox.Show(tbox.Tag + " requires a positive integer greater than zero.", "Invalid Value");
                 tbox.Focus();
@@ -34,7 +34,7 @@ namespace Tickets
         }
 
         // and a method to check that it's a valid time
-        public bool IsTime(TextBox tbox)
+        public static bool IsTime(TextBox tbox)
         {
             DateTime whatevs;
             if (!(DateTime.TryParse(tbox.Text,out whatevs)))
@@ -47,15 +47,36 @@ namespace Tickets
         }
 
         // checks that the start and end time allow for at least two time slots
-        // should really take three textboxes??
-        public bool AtLeastTwoSlots(DateTime anfang, DateTime endung, int minuten)
+        public static bool AtLeastTwoSlots(TextBox start, TextBox end, TextBox minutes)
         {
+            DateTime anfang, endung;
+            if (!(DateTime.TryParse(start.Text, out anfang)))
+            {
+                MessageBox.Show(start.Tag + " does not appear to be a valid time.  Please check your entry.",
+                    "Invalid time");
+                return false;
+            }
+            if (!(DateTime.TryParse(end.Text, out endung)))
+            {
+                MessageBox.Show(end.Tag + " does not appear to be a valid time.  Please check your entry.",
+                    "Invalid time");
+                return false;
+            }
+            int minuten = Convert.ToInt32(minutes.Text);
+
             // we need to verify that the opening hours are at least the same length as the number of minutes.
             // this ensures one slot at opening and one slot at closing.
             TimeSpan timeDiff = endung - anfang;
-            if (timeDiff.Minutes >= minuten)
+            // need to convert timespan to a total number of minutes:
+            int totalMinutes = (timeDiff.Hours * 60) + timeDiff.Minutes;
+            // MessageBox.Show(totalMinutes.ToString());
+            if (totalMinutes < minuten)
             {
                 // TODO add alert message
+                string msg = "Your hours of operation do not allow for at least two batches of tickets.\n" +
+                    "Please either reduce the number of minutes per window, or extend your hours of operation.";
+                string caption = "Not enough ticket batches.";
+                MessageBox.Show(msg, caption);
                 return false;
             }
             else return true;
