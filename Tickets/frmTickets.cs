@@ -14,7 +14,8 @@ namespace Tickets
     {
         // need an array of time slots and an array of tickets
         List<TimeSlot> availableSlots = new List<TimeSlot>();
-        List<Ticket> ticketQueue = new List<Ticket>(); 
+        List<Ticket> ticketQueue = new List<Ticket>();
+        Options options;
 
         public frmTickets()
         {
@@ -27,6 +28,7 @@ namespace Tickets
             DateTime currentTime = DateTime.Now;
             this.Text = currentTime.ToShortTimeString() + "(Open)";
             // let's load up timeslot data with deafaults for now.
+            options = new Options(120, 5, Convert.ToDateTime("10:49 AM"), Convert.ToDateTime("2:49 PM"), 1);
             generateTimeSlots();
         }
 
@@ -34,10 +36,10 @@ namespace Tickets
         {
             // generates array of available time slots - should this take an array?
             // let's hard-code this with our defaults for now
-            int mins = 120;
-            int guests = 5;
-            DateTime start = Convert.ToDateTime("10:49 AM");
-            DateTime end = Convert.ToDateTime("2:49 PM");
+            int mins = options.MinutesPerWindow;
+            int guests = options.GuestsPerWindow;
+            DateTime start = options.StartTime;
+            DateTime end = options.EndTime;
             //int firstTicket = 1;
 
             DateTime nextTime = start;
@@ -53,7 +55,7 @@ namespace Tickets
 
         private Ticket GetNextTicket()
         {
-            int firstTicket = 1;
+            int firstTicket = options.FirstTicket;
             // inspects timeslot array and generates a ticket for the next available slot.
             Ticket t = new Ticket();
             // if the array is empty, generate the first ticket
@@ -73,10 +75,12 @@ namespace Tickets
 
                 // maximum number of tickets that can be assigned
                 int maxNumberOfTickets = availableSlots[0].TicketsPerSlot * availableSlots.Count;
+
                 TimeSlot myTimeSlot;
+
                 if (countOfTickets == maxNumberOfTickets)
                 {
-                    // we have no more tickets available
+                    // we have no more tickets available - inform the user
                     string msg = "The last available ticket has been issued.  No more tickets available today!";
                     string caption = "Out of Tickets!";
                     MessageBox.Show(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
@@ -116,7 +120,7 @@ namespace Tickets
                 // add it to ticketQueue
                 ticketQueue.Add(ticket);
                 // and also add it to the listbox
-                lstTicketQueue.Items.Add(ticket.GetTicketInfo());
+                lstTicketQueue.Items.Add(ticket.ToString());
             }
         } // end btnIssueTicket
 

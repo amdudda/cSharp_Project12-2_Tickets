@@ -26,7 +26,7 @@ namespace Tickets
             return this.TicketNum + 1;
         }
 
-        public string GetTicketInfo()
+        public string ToString()
         {
             return "Ticket " + this.TicketNum + ": " + this.AdmitTime.StartTime.ToShortTimeString();
         }
