@@ -25,5 +25,10 @@ namespace Tickets
         {
             return this.TicketNum + 1;
         }
+
+        public string GetTicketInfo()
+        {
+            return "Ticket " + this.TicketNum + ": " + this.AdmitTime.StartTime.ToShortTimeString();
+        }
     }
 }

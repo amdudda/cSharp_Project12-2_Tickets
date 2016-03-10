@@ -104,6 +104,7 @@
             this.txtMinutes.TabIndex = 7;
             this.txtMinutes.Tag = "Minutes";
             this.txtMinutes.Text = "5";
+            this.txtMinutes.Leave += new System.EventHandler(this.IntegerTextbox_Leave);
             // 
             // txtGuests
             // 
@@ -113,6 +114,7 @@
             this.txtGuests.TabIndex = 8;
             this.txtGuests.Tag = "Guests";
             this.txtGuests.Text = "5";
+            this.txtGuests.Leave += new System.EventHandler(this.IntegerTextbox_Leave);
             // 
             // txtStartTime
             // 
@@ -122,6 +124,7 @@
             this.txtStartTime.TabIndex = 9;
             this.txtStartTime.Tag = "Start time";
             this.txtStartTime.Text = "10:49 AM";
+            this.txtStartTime.Leave += new System.EventHandler(this.TimeTextbox_Leave);
             // 
             // txtEndTime
             // 
@@ -131,6 +134,7 @@
             this.txtEndTime.TabIndex = 10;
             this.txtEndTime.Tag = "End time";
             this.txtEndTime.Text = "2:49 PM";
+            this.txtEndTime.Leave += new System.EventHandler(this.TimeTextbox_Leave);
             // 
             // txtFirstTicket
             // 
@@ -140,6 +144,7 @@
             this.txtFirstTicket.TabIndex = 11;
             this.txtFirstTicket.Tag = "First ticket";
             this.txtFirstTicket.Text = "1";
+            this.txtFirstTicket.Leave += new System.EventHandler(this.IntegerTextbox_Leave);
             // 
             // btnOK
             // 
@@ -149,6 +154,7 @@
             this.btnOK.TabIndex = 12;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // frmOptions
             // 
