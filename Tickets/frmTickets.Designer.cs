@@ -32,9 +32,9 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblNowAdmitting = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lblTicketsOutstanding = new System.Windows.Forms.Label();
-            this.lblNextEntry = new System.Windows.Forms.Label();
             this.btnIssueTicket = new System.Windows.Forms.Button();
+            this.lblNextEntry = new System.Windows.Forms.Label();
+            this.lblTicketsOutstanding = new System.Windows.Forms.Label();
             this.lstTicketQueue = new System.Windows.Forms.ListBox();
             this.btnOptions = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
@@ -82,14 +82,15 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Ticket Availability";
             // 
-            // lblTicketsOutstanding
+            // btnIssueTicket
             // 
-            this.lblTicketsOutstanding.AutoSize = true;
-            this.lblTicketsOutstanding.Location = new System.Drawing.Point(10, 20);
-            this.lblTicketsOutstanding.Name = "lblTicketsOutstanding";
-            this.lblTicketsOutstanding.Size = new System.Drawing.Size(113, 13);
-            this.lblTicketsOutstanding.TabIndex = 0;
-            this.lblTicketsOutstanding.Text = "No tickets outstanding";
+            this.btnIssueTicket.Location = new System.Drawing.Point(13, 65);
+            this.btnIssueTicket.Name = "btnIssueTicket";
+            this.btnIssueTicket.Size = new System.Drawing.Size(99, 23);
+            this.btnIssueTicket.TabIndex = 2;
+            this.btnIssueTicket.Text = "&IssueTicket";
+            this.btnIssueTicket.UseVisualStyleBackColor = true;
+            this.btnIssueTicket.Click += new System.EventHandler(this.btnIssueTicket_Click);
             // 
             // lblNextEntry
             // 
@@ -100,14 +101,14 @@
             this.lblNextEntry.TabIndex = 1;
             this.lblNextEntry.Text = "Next available entry:      Now";
             // 
-            // btnIssueTicket
+            // lblTicketsOutstanding
             // 
-            this.btnIssueTicket.Location = new System.Drawing.Point(13, 65);
-            this.btnIssueTicket.Name = "btnIssueTicket";
-            this.btnIssueTicket.Size = new System.Drawing.Size(99, 23);
-            this.btnIssueTicket.TabIndex = 2;
-            this.btnIssueTicket.Text = "&IssueTicket";
-            this.btnIssueTicket.UseVisualStyleBackColor = true;
+            this.lblTicketsOutstanding.AutoSize = true;
+            this.lblTicketsOutstanding.Location = new System.Drawing.Point(10, 20);
+            this.lblTicketsOutstanding.Name = "lblTicketsOutstanding";
+            this.lblTicketsOutstanding.Size = new System.Drawing.Size(113, 13);
+            this.lblTicketsOutstanding.TabIndex = 0;
+            this.lblTicketsOutstanding.Text = "No tickets outstanding";
             // 
             // lstTicketQueue
             // 
