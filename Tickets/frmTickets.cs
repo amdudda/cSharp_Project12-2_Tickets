@@ -27,9 +27,13 @@ namespace Tickets
             // eventually this will move elsewhere
             DateTime currentTime = DateTime.Now;
             this.Text = currentTime.ToShortTimeString() + "(Open)";
-            // let's load up timeslot data with deafaults for now.
+            // let's load up timeslot data with defaults for now.
             options = new Options(120, 5, Convert.ToDateTime("10:49 AM"), Convert.ToDateTime("2:49 PM"), 1);
+            // have the user give us data.
+            frmOptions initOptions = new frmOptions();
+            options = initOptions.ResetOptions(options);
             generateTimeSlots();
+
         }
 
         private void generateTimeSlots()
