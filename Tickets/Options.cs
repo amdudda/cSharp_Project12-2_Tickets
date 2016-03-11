@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tickets
 {
-    class Options
+    public class Options
     {
         // this is a helper object to store application options
 

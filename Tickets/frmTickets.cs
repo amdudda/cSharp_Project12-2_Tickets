@@ -121,12 +121,50 @@ namespace Tickets
                 ticketQueue.Add(ticket);
                 // and also add it to the listbox
                 lstTicketQueue.Items.Add(ticket.ToString());
+                // and update queue info
+                lblTicketsOutstanding.Text = "Total tickets outstanding:  \t" + ticketQueue.Count.ToString();
+                // TODO: next available time slot
+                string nextSlot = ticket.AdmitTime.StartTime.ToShortTimeString();
+                // the above is true for most tickets, but what if it's the last ticket in its batch?
+                if (ticket.TicketNum % options.GuestsPerWindow == 0)
+                {
+                    int index = availableSlots.IndexOf(ticket.AdmitTime);
+                    // need to get next slot if one is available.
+                    if (index != availableSlots.Count - 1)
+                    {
+                        // one is available, change to reflect this
+                        nextSlot = availableSlots[index + 1].StartTime.ToShortTimeString();
+                    }
+                    else
+                    {
+                        // none available, note this
+                        nextSlot = "No more tickets available.";
+                    }
+                }
+                // update next slot display
+                lblNextEntry.Text = "Next available entry:  \t" + nextSlot;
             }
         } // end btnIssueTicket
 
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnOptions_Click(object sender, EventArgs e)
+        {
+            // TODO: warn user data will be cleared.
+            // get updated options 
+            frmOptions resetOptions = new frmOptions();
+            options = resetOptions.ResetOptions(options);
+
+            // and clear the form and both Lists
+            lstTicketQueue.Items.Clear();
+            availableSlots.Clear();
+            ticketQueue.Clear();
+
+            // and generate a new set of available time slots
+            generateTimeSlots();
         } 
 
     } // end partial class frmTickets
