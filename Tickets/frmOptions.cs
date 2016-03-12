@@ -12,6 +12,8 @@ namespace Tickets
 {
     public partial class frmOptions : Form
     {
+        private Options myOptions = new Options();
+
         public frmOptions()
         {
             InitializeComponent();
@@ -32,9 +34,19 @@ namespace Tickets
         }
 
         // need a method to reset program options
-        private void ResetOptions()
+        public Options ResetOptions(Options oldOptions)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(oldOptions.StartTime.ToShortTimeString());
+            //take old options and populate our screen with them
+            txtMinutes.Text = oldOptions.MinutesPerWindow.ToString();
+            txtGuests.Text = oldOptions.GuestsPerWindow.ToString();
+            txtStartTime.Text = oldOptions.StartTime.ToShortTimeString();
+            txtEndTime.Text = oldOptions.EndTime.ToShortTimeString();
+            txtFirstTicket.Text = oldOptions.FirstTicket.ToString();
+            
+            this.ShowDialog();
+            // and return updated options
+            return myOptions;
         }
 
         // this initializes settings and starts up the ticket queue
@@ -53,8 +65,20 @@ namespace Tickets
             // if we really do have valid data, proceed.
             if (validTextboxData && validInterval)
             {
-                MessageBox.Show("Success!!");
-                // TODO generate slots & tickets and move to ticket management window.  
+                //MessageBox.Show("Success!!");
+                // TODO generate new options & return to ticket management window.
+                // gather values
+                int neueMinuten = Convert.ToInt32(txtMinutes.Text);
+                int neueGaeste = Convert.ToInt32(txtGuests.Text);
+                DateTime neuesAnfang = Convert.ToDateTime(txtStartTime.Text);
+                DateTime neuesEnde = Convert.ToDateTime(txtEndTime.Text);
+                int neuesTicket = Convert.ToInt32(txtFirstTicket.Text);
+
+                // update myOptions object
+                myOptions = new Options(neueMinuten, neueGaeste, neuesAnfang, neuesEnde, neuesTicket);
+
+                // and close the window
+                this.Close();
             }
         }
     }
