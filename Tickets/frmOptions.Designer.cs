@@ -123,7 +123,6 @@
             this.txtStartTime.Size = new System.Drawing.Size(100, 20);
             this.txtStartTime.TabIndex = 9;
             this.txtStartTime.Tag = "Start time";
-            this.txtStartTime.Text = "10:49 AM";
             this.txtStartTime.Leave += new System.EventHandler(this.TimeTextbox_Leave);
             // 
             // txtEndTime
@@ -133,7 +132,6 @@
             this.txtEndTime.Size = new System.Drawing.Size(100, 20);
             this.txtEndTime.TabIndex = 10;
             this.txtEndTime.Tag = "End time";
-            this.txtEndTime.Text = "2:49 PM";
             this.txtEndTime.Leave += new System.EventHandler(this.TimeTextbox_Leave);
             // 
             // txtFirstTicket

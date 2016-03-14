@@ -5,7 +5,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tickets
@@ -15,7 +14,9 @@ namespace Tickets
         // need an array of time slots and an array of tickets
         List<TimeSlot> availableSlots = new List<TimeSlot>();
         List<Ticket> ticketQueue = new List<Ticket>();
-        Options options;
+        TimeSlot currentSlot;
+        public Options options;
+        public Timer timer = new Timer();
 
         public frmTickets()
         {
@@ -28,18 +29,36 @@ namespace Tickets
             DateTime currentTime = DateTime.Now;
             this.Text = currentTime.ToShortTimeString() + "(Open)";
             // let's load up timeslot data with defaults for now.
-            options = new Options(120, 5, Convert.ToDateTime("10:49 AM"), Convert.ToDateTime("2:49 PM"), 1);
+            options = new Options(5, 5, currentTime, currentTime.AddHours(4), 1);
             // have the user give us data.
             frmOptions initOptions = new frmOptions();
             options = initOptions.ResetOptions(options);
             generateTimeSlots();
+            // and now we kick off the timer
+            timer.Interval = 1000;
+            timer.Tick += timer_Elapsed;
+            timer.Start();
+        }
 
+        void timer_Elapsed(object sender, EventArgs e)
+        {
+            // update title bar and queue summary
+            updateTitleBar();
+            UpdateQueueSummary();
+        }
+
+        private void updateTitleBar()
+        {
+            DateTime curTime = DateTime.Now;
+            string title = curTime.ToShortTimeString();
+            if (curTime <= options.EndTime) title += " (Open)";
+            else title += " (Closed)";
+            this.Text = title;
         }
 
         private void generateTimeSlots()
         {
-            // generates array of available time slots - should this take an array?
-            // let's hard-code this with our defaults for now
+            // generates array of available time slots
             int mins = options.MinutesPerWindow;
             int guests = options.GuestsPerWindow;
             DateTime start = options.StartTime;
@@ -66,54 +85,41 @@ namespace Tickets
             if (ticketQueue == null || ticketQueue.Count() == 0)
             {
                 t.TicketNum = firstTicket;
-                t.AdmitTime = availableSlots[0];
+                t.AdmitTime = GetNextTimeSlot();
+                return t;
             }
-            else  // there are already tickets in the queue, fetch the last ticket and get the next ticket number               
+            else     
             {
-                Ticket lastTicket = ticketQueue.Last<Ticket>();
-                int nextTicketNum = lastTicket.GetNextTicketNumber();
-                // now to figure out what the next available time slot is - a couple of different ways to do this.  let's modulo the tickets per slot; if it's zero, get the next time slot, otherwise use the current one.
-                int countOfTickets = ticketQueue.Count();
-                int ticketsPerSlot = lastTicket.AdmitTime.TicketsPerSlot;
-                // ^^^ technically a static value, but I have to store it this way to meet assignment spec
-
-                // maximum number of tickets that can be assigned
-                int maxNumberOfTickets = availableSlots[0].TicketsPerSlot * availableSlots.Count;
-
-                TimeSlot myTimeSlot;
-
-                if (countOfTickets == maxNumberOfTickets)
-                {
-                    // we have no more tickets available - inform the user
-                    string msg = "The last available ticket has been issued.  No more tickets available today!";
-                    string caption = "Out of Tickets!";
-                    MessageBox.Show(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                    return null;
-                }
-                else if (countOfTickets % ticketsPerSlot == 0)
-                {
-                    // we need a new time slot
-                    // find the index of the previous ticket's time slot in the timeslot array
-                    int index = availableSlots.IndexOf(lastTicket.AdmitTime);
-                    // then assign the next slot's info for the new ticket
-                    myTimeSlot = availableSlots[index + 1];
-                }
-                else
-                {
-                    // use the same time slot as the preceding ticket
-                    myTimeSlot = lastTicket.AdmitTime;
-                } // end if-else to add ticket to the queue
-
-                // and now create our new ticket
-                t.TicketNum = nextTicketNum;
-                t.AdmitTime = myTimeSlot;
-                                
+                // there are already tickets in the queue, generate and return a new ticket
+                // I coded this and then extracted a method with {ctrl+r,m}
+                return GenerateNewTicket(t);
+   
             } // end if-else to create ticket
 
-            // and return our new ticket
-            return t;
-
         } // end GetNextTicket
+
+        private Ticket GenerateNewTicket(Ticket t)
+        {
+            Ticket lastTicket = ticketQueue.Last<Ticket>();
+            int nextTicketNum = lastTicket.GetNextTicketNumber();
+
+            // check that we still have time slots available before issuing the next ticket
+            if (GetNextTimeSlot() == null)
+            {
+                // we have no more tickets available - inform the user
+                string msg = "The last available ticket has been issued.  No more tickets available today!";
+                string caption = "Out of Tickets!";
+                MessageBox.Show(msg, caption, MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                return null;
+            }
+            else
+            {
+                // create our new ticket and return it
+                t.TicketNum = nextTicketNum;
+                t.AdmitTime = GetNextTimeSlot();
+                return t;
+            } // end if-else to add ticket to the queue
+        } // end GenerateNewTicket
 
         private void btnIssueTicket_Click(object sender, EventArgs e)
         {
@@ -125,30 +131,30 @@ namespace Tickets
                 ticketQueue.Add(ticket);
                 // and also add it to the listbox
                 lstTicketQueue.Items.Add(ticket.ToString());
-                // and update queue info
-                lblTicketsOutstanding.Text = "Total tickets outstanding:  \t" + ticketQueue.Count.ToString();
-                // TODO: next available time slot
-                string nextSlot = ticket.AdmitTime.StartTime.ToShortTimeString();
-                // the above is true for most tickets, but what if it's the last ticket in its batch?
-                if (ticket.TicketNum % options.GuestsPerWindow == 0)
-                {
-                    int index = availableSlots.IndexOf(ticket.AdmitTime);
-                    // need to get next slot if one is available.
-                    if (index != availableSlots.Count - 1)
-                    {
-                        // one is available, change to reflect this
-                        nextSlot = availableSlots[index + 1].StartTime.ToShortTimeString();
-                    }
-                    else
-                    {
-                        // none available, note this
-                        nextSlot = "No more tickets available.";
-                    }
-                }
-                // update next slot display
-                lblNextEntry.Text = "Next available entry:  \t" + nextSlot;
+                // and update the queue summary
+                UpdateQueueSummary();
             }
         } // end btnIssueTicket
+
+        private void UpdateQueueSummary()
+        {
+            // and update queue info
+            lblTicketsOutstanding.Text = "Total tickets outstanding:  \t" + ticketQueue.Count.ToString();
+            // get next available time slot
+            TimeSlot nextSlot = GetNextTimeSlot();
+            // the above is true for most tickets, but what if it's the last ticket in its batch?
+            if (nextSlot != null)
+            {
+                // one is available, change to reflect this
+                // update next slot display
+                lblNextEntry.Text = "Next available entry:  \t" + nextSlot.StartTime.ToShortTimeString();
+            }
+            else
+            {
+                // none available, note this
+                lblNextEntry.Text = "No more tickets available.";
+            }
+        }
 
         private void btnExit_Click(object sender, EventArgs e)
         {
@@ -169,7 +175,51 @@ namespace Tickets
 
             // and generate a new set of available time slots
             generateTimeSlots();
-        } 
+        }
+
+        // this returns the next available time slot
+        private TimeSlot GetNextTimeSlot()
+        {
+            TimeSlot nextSlot = null;
+            // First, find a time that hasn't happened yet
+            DateTime currentTime = DateTime.Now;
+            foreach (TimeSlot ts in availableSlots)
+            {
+                if (currentTime < ts.StartTime)
+                {
+                    // we've found the next slot - break out of the loop
+                    nextSlot = ts;
+                    break;
+                }
+            }
+            // TODO: but what if all tickets are already assigned for that slot?  check the next slot!
+            bool keinZeit = true;
+            while (keinZeit) {
+            int ticketCount = 0;
+                foreach (Ticket t in ticketQueue)
+                {
+                    // count how many tickets are assigned to the current slot
+                    if (t.AdmitTime == nextSlot) ticketCount++;
+                }
+                if (ticketCount < options.GuestsPerWindow)
+                {
+                    // we found our slot, break the while loop
+                    keinZeit = false;
+                }
+                else
+                {
+                    // move to the next available slot in the array and try again
+                    int nextIndex = availableSlots.IndexOf(nextSlot) + 1;
+                    if (nextIndex < availableSlots.Count)
+                    {
+                        nextSlot = availableSlots[nextIndex];
+                    }
+                    else nextSlot = null;
+                }
+            }
+
+            return nextSlot;
+        }
 
     } // end partial class frmTickets
 }
