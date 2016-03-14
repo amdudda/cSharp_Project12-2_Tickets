@@ -14,7 +14,6 @@ namespace Tickets
         // need an array of time slots and an array of tickets
         List<TimeSlot> availableSlots = new List<TimeSlot>();
         List<Ticket> ticketQueue = new List<Ticket>();
-        TimeSlot currentSlot;
         public Options options;
         public Timer timer = new Timer();
 
@@ -142,7 +141,7 @@ namespace Tickets
             lblTicketsOutstanding.Text = "Total tickets outstanding:  \t" + ticketQueue.Count.ToString();
             // get next available time slot
             TimeSlot nextSlot = GetNextTimeSlot();
-            // the above is true for most tickets, but what if it's the last ticket in its batch?
+            // if there are no slots available, nextSlot should return null, and we want to respond appropriately.
             if (nextSlot != null)
             {
                 // one is available, change to reflect this
@@ -154,7 +153,7 @@ namespace Tickets
                 // none available, note this
                 lblNextEntry.Text = "No more tickets available.";
             }
-        }
+        } // end UpdateQueueSummary
 
         private void btnExit_Click(object sender, EventArgs e)
         {
