@@ -162,18 +162,35 @@ namespace Tickets
 
         private void btnOptions_Click(object sender, EventArgs e)
         {
+            // pause the timer
+            timer.Stop();
             // TODO: warn user data will be cleared.
-            // get updated options 
-            frmOptions resetOptions = new frmOptions();
-            options = resetOptions.ResetOptions(options);
+            string msg = "If you continue, the current ticket queue will be emptied and all data will be lost!\n" +
+                "Click [OK] to continue, or [Cancel] to cancel and return to the ticket queue screen.";
+            string caption = "Warning: Delete Queue?";
 
-            // and clear the form and both Lists
-            lstTicketQueue.Items.Clear();
-            availableSlots.Clear();
-            ticketQueue.Clear();
+            // warn the user and get permission to continue.
+            DialogResult userAnswer = MessageBox.Show(msg, caption, MessageBoxButtons.OKCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2);
 
-            // and generate a new set of available time slots
-            generateTimeSlots();
+            // if the user said OK, proceed with getting new options and resetting everything.
+            if (userAnswer == DialogResult.OK)
+            {
+                // get updated options 
+                frmOptions resetOptions = new frmOptions();
+                options = resetOptions.ResetOptions(options);
+
+                // clear the form and both Lists
+                lstTicketQueue.Items.Clear();
+                availableSlots.Clear();
+                ticketQueue.Clear();
+
+                // generate a new set of available time slots
+                generateTimeSlots();
+            }
+
+            // no matter what the user says, restart the timer and update queue info
+            timer.Start();
+            UpdateQueueSummary();
         }
 
         // this returns the next available time slot
@@ -191,7 +208,7 @@ namespace Tickets
                     break;
                 }
             }
-            // TODO: but what if all tickets are already assigned for that slot?  check the next slot!
+            // but what if all tickets are already assigned for that slot?  check the next slot!
             bool keinZeit = true;
             while (keinZeit) {
             int ticketCount = 0;
@@ -218,7 +235,7 @@ namespace Tickets
             }
 
             return nextSlot;
-        }
+        } // end GetNextTimeSlot
 
     } // end partial class frmTickets
 }
