@@ -33,6 +33,7 @@ namespace Tickets
             frmOptions initOptions = new frmOptions();
             options = initOptions.ResetOptions(options);
             generateTimeSlots();
+            lblNowAdmitting.Text = "1 - " + options.GuestsPerWindow;
             // and now we kick off the timer
             timer.Interval = 1000;
             timer.Tick += timer_Elapsed;
@@ -50,14 +51,22 @@ namespace Tickets
         private void RemoveElapsedTickets()
         {
             // removes tickets from list box if their start time has elapsed.
-            // TODO gather ticket numbers and update display of "now admitting".
+            
+            List<int> ticketNumbers = new List<int>();
+            // TODO let's make really sure this is empty - when testing, it came up with "1-6" after tickets cleared instead of "6-6"
+            ticketNumbers.Clear();
             foreach (Ticket ticket in ticketQueue)
             {
                 if (ticket.AdmitTime.StartTime < DateTime.Now)
                 {
+                    ticketNumbers.Add(ticket.TicketNum); // gather ticket numbers to update display of "now admitting".
                     lstTicketQueue.Items.Remove(ticket);
                 }
             }
+            // update "now admitting" if list of numbers has elements in it
+            // TODO this always says "1-n" when displaying
+            if (ticketNumbers.Count > 0) 
+                lblNowAdmitting.Text = "" + ticketNumbers.Min() + " - " + ticketNumbers.Max();
         }
 
         private void updateTitleBar()
@@ -152,7 +161,7 @@ namespace Tickets
         private void UpdateQueueSummary()
         {
             // and update queue info
-            lblTicketsOutstanding.Text = "Total tickets outstanding:  \t" + ticketQueue.Count.ToString();
+            lblTicketsOutstanding.Text = "Total tickets outstanding:  \t" + lstTicketQueue.Items.Count;
             // get next available time slot
             TimeSlot nextSlot = GetNextTimeSlot();
             // if there are no slots available, nextSlot should return null, and we want to respond appropriately.

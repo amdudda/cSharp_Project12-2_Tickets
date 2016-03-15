@@ -36,7 +36,7 @@ namespace Tickets
         // need a method to reset program options
         public Options ResetOptions(Options oldOptions)
         {
-            MessageBox.Show(oldOptions.StartTime.ToShortTimeString());
+            // debugging:  MessageBox.Show(oldOptions.StartTime.ToShortTimeString());
             //take old options and populate our screen with them
             txtMinutes.Text = oldOptions.MinutesPerWindow.ToString();
             txtGuests.Text = oldOptions.GuestsPerWindow.ToString();
