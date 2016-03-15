@@ -48,7 +48,7 @@
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(174, 13);
-            this.label1.TabIndex = 1;
+            this.label1.TabIndex = 0;
             this.label1.Text = "A.M. Dudda - Project 12.2 - Tickets";
             // 
             // label2
@@ -57,8 +57,8 @@
             this.label2.Location = new System.Drawing.Point(12, 31);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(104, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Minutes per window:";
+            this.label2.TabIndex = 1;
+            this.label2.Text = "&Minutes per window:";
             // 
             // label3
             // 
@@ -67,7 +67,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(100, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Guests per window:";
+            this.label3.Text = "&Guests per window:";
             // 
             // label4
             // 
@@ -75,8 +75,8 @@
             this.label4.Location = new System.Drawing.Point(12, 87);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "Start time:";
+            this.label4.TabIndex = 5;
+            this.label4.Text = "&Start time:";
             // 
             // label5
             // 
@@ -84,8 +84,8 @@
             this.label5.Location = new System.Drawing.Point(12, 115);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(51, 13);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "End time:";
+            this.label5.TabIndex = 7;
+            this.label5.Text = "&End time:";
             // 
             // label6
             // 
@@ -93,15 +93,15 @@
             this.label6.Location = new System.Drawing.Point(12, 143);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(96, 13);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "First ticket number:";
+            this.label6.TabIndex = 9;
+            this.label6.Text = "&First ticket number:";
             // 
             // txtMinutes
             // 
             this.txtMinutes.Location = new System.Drawing.Point(122, 28);
             this.txtMinutes.Name = "txtMinutes";
             this.txtMinutes.Size = new System.Drawing.Size(100, 20);
-            this.txtMinutes.TabIndex = 7;
+            this.txtMinutes.TabIndex = 2;
             this.txtMinutes.Tag = "Minutes";
             this.txtMinutes.Text = "5";
             this.txtMinutes.Leave += new System.EventHandler(this.IntegerTextbox_Leave);
@@ -111,7 +111,7 @@
             this.txtGuests.Location = new System.Drawing.Point(122, 56);
             this.txtGuests.Name = "txtGuests";
             this.txtGuests.Size = new System.Drawing.Size(100, 20);
-            this.txtGuests.TabIndex = 8;
+            this.txtGuests.TabIndex = 4;
             this.txtGuests.Tag = "Guests";
             this.txtGuests.Text = "5";
             this.txtGuests.Leave += new System.EventHandler(this.IntegerTextbox_Leave);
@@ -121,7 +121,7 @@
             this.txtStartTime.Location = new System.Drawing.Point(122, 84);
             this.txtStartTime.Name = "txtStartTime";
             this.txtStartTime.Size = new System.Drawing.Size(100, 20);
-            this.txtStartTime.TabIndex = 9;
+            this.txtStartTime.TabIndex = 6;
             this.txtStartTime.Tag = "Start time";
             this.txtStartTime.Leave += new System.EventHandler(this.TimeTextbox_Leave);
             // 
@@ -130,7 +130,7 @@
             this.txtEndTime.Location = new System.Drawing.Point(122, 112);
             this.txtEndTime.Name = "txtEndTime";
             this.txtEndTime.Size = new System.Drawing.Size(100, 20);
-            this.txtEndTime.TabIndex = 10;
+            this.txtEndTime.TabIndex = 8;
             this.txtEndTime.Tag = "End time";
             this.txtEndTime.Leave += new System.EventHandler(this.TimeTextbox_Leave);
             // 
@@ -139,7 +139,7 @@
             this.txtFirstTicket.Location = new System.Drawing.Point(122, 140);
             this.txtFirstTicket.Name = "txtFirstTicket";
             this.txtFirstTicket.Size = new System.Drawing.Size(100, 20);
-            this.txtFirstTicket.TabIndex = 11;
+            this.txtFirstTicket.TabIndex = 10;
             this.txtFirstTicket.Tag = "First ticket";
             this.txtFirstTicket.Text = "1";
             this.txtFirstTicket.Leave += new System.EventHandler(this.IntegerTextbox_Leave);
@@ -149,13 +149,14 @@
             this.btnOK.Location = new System.Drawing.Point(122, 182);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(100, 23);
-            this.btnOK.TabIndex = 12;
+            this.btnOK.TabIndex = 11;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // frmOptions
             // 
+            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(241, 224);

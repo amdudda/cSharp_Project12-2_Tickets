@@ -15,6 +15,7 @@ namespace Tickets
             {
                 MessageBox.Show(tbox.Tag + " cannot be empty.  Please enter a value.","Required Field");
                 tbox.Focus();
+                tbox.SelectAll();
                 return false;
             }
             else return true;
@@ -28,6 +29,7 @@ namespace Tickets
             {
                 MessageBox.Show(tbox.Tag + " requires a positive integer greater than zero.", "Invalid Value");
                 tbox.Focus();
+                tbox.SelectAll();
                 return false;
             }
             else return true;
@@ -41,6 +43,8 @@ namespace Tickets
             {
                 MessageBox.Show(tbox.Tag + " does not appear to be a valid time.  Please check your entry.",
                     "Invalid time");
+                tbox.Focus();
+                tbox.SelectAll();
                 return false;
             }
             else return true;
@@ -54,12 +58,16 @@ namespace Tickets
             {
                 MessageBox.Show(start.Tag + " does not appear to be a valid time.  Please check your entry.",
                     "Invalid time");
+                start.Focus();
+                start.SelectAll();
                 return false;
             }
             if (!(DateTime.TryParse(end.Text, out endung)))
             {
                 MessageBox.Show(end.Tag + " does not appear to be a valid time.  Please check your entry.",
                     "Invalid time");
+                end.Focus();
+                end.SelectAll();
                 return false;
             }
             int minuten = Convert.ToInt32(minutes.Text);
@@ -77,6 +85,8 @@ namespace Tickets
                     "Please either reduce the number of minutes per window, or extend your hours of operation.";
                 string caption = "Not enough ticket batches.";
                 MessageBox.Show(msg, caption);
+                end.Focus();
+                end.SelectAll();
                 return false;
             }
             else return true;
