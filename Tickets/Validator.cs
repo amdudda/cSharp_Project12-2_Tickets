@@ -41,7 +41,11 @@ namespace Tickets
             DateTime whatevs;
             if (!(DateTime.TryParse(tbox.Text,out whatevs)))
             {
-                MessageBox.Show(tbox.Tag + " does not appear to be a valid time.  Please check your entry.",
+                string msg = tbox.Tag + " does not appear to be a valid time.  Please check your entry." +
+                    "Examples of valid times are: \n" +
+                    "\t2:00 PM\n" +
+                    "\t14:00";
+                MessageBox.Show(msg,
                     "Invalid time");
                 tbox.Focus();
                 tbox.SelectAll();
@@ -54,22 +58,13 @@ namespace Tickets
         public static bool AtLeastTwoSlots(TextBox start, TextBox end, TextBox minutes)
         {
             DateTime anfang, endung;
-            if (!(DateTime.TryParse(start.Text, out anfang)))
+            if (IsTime(start) && IsTime(end))  // these should already have been validated, but let's be careful
             {
-                MessageBox.Show(start.Tag + " does not appear to be a valid time.  Please check your entry.",
-                    "Invalid time");
-                start.Focus();
-                start.SelectAll();
-                return false;
+                anfang = DateTime.Parse(start.Text);
+                endung = DateTime.Parse(end.Text);
             }
-            if (!(DateTime.TryParse(end.Text, out endung)))
-            {
-                MessageBox.Show(end.Tag + " does not appear to be a valid time.  Please check your entry.",
-                    "Invalid time");
-                end.Focus();
-                end.SelectAll();
-                return false;
-            }
+            else return false;  // if this fails, kick user out
+            
             int minuten = Convert.ToInt32(minutes.Text);
 
             // we need to verify that the opening hours are at least the same length as the number of minutes.
