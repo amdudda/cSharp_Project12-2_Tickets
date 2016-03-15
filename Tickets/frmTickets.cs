@@ -44,6 +44,20 @@ namespace Tickets
             // update title bar and queue summary
             updateTitleBar();
             UpdateQueueSummary();
+            RemoveElapsedTickets();
+        }
+
+        private void RemoveElapsedTickets()
+        {
+            // removes tickets from list box if their start time has elapsed.
+            // TODO gather ticket numbers and update display of "now admitting".
+            foreach (Ticket ticket in ticketQueue)
+            {
+                if (ticket.AdmitTime.StartTime < DateTime.Now)
+                {
+                    lstTicketQueue.Items.Remove(ticket);
+                }
+            }
         }
 
         private void updateTitleBar()
@@ -128,8 +142,8 @@ namespace Tickets
             {
                 // add it to ticketQueue
                 ticketQueue.Add(ticket);
-                // and also add it to the listbox
-                lstTicketQueue.Items.Add(ticket.ToString());
+                // and also add it to the listbox - pass the ticket object so I can remove it after time expires
+                lstTicketQueue.Items.Add(ticket);
                 // and update the queue summary
                 UpdateQueueSummary();
             }
