@@ -53,14 +53,13 @@ namespace Tickets
             // removes tickets from list box if their start time has elapsed.
             
             List<int> ticketNumbers = new List<int>();
-            // TODO let's make really sure this is empty - when testing, it came up with "1-6" after tickets cleared instead of "6-6"
-            ticketNumbers.Clear();
             foreach (Ticket ticket in ticketQueue)
             {
-                if (ticket.AdmitTime.StartTime < DateTime.Now)
+                // check if the ticket has already lapsed & if it's still in the list of tickets.
+                if (ticket.AdmitTime.StartTime < DateTime.Now && lstTicketQueue.Items.IndexOf(ticket) != -1)
                 {
                     ticketNumbers.Add(ticket.TicketNum); // gather ticket numbers to update display of "now admitting".
-                    lstTicketQueue.Items.Remove(ticket);
+                    lstTicketQueue.Items.Remove(ticket);  // remove it from the list of tickets
                 }
             }
             // update "now admitting" if list of numbers has elements in it
