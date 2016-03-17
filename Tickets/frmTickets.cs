@@ -32,7 +32,7 @@ namespace Tickets
             // have the user give us data.
             frmOptions initOptions = new frmOptions();
             options = initOptions.ResetOptions(options);
-            generateTimeSlots();
+            GenerateTimeSlots();
             lblNowAdmitting.Text = "1 - " + options.GuestsPerWindow;
             // and now we kick off the timer
             timer.Interval = 1000;
@@ -43,7 +43,7 @@ namespace Tickets
         void timer_Elapsed(object sender, EventArgs e)
         {
             // update title bar and queue summary
-            updateTitleBar();
+            UpdateTitleBar();
             UpdateQueueSummary();
             RemoveElapsedTickets();
         }
@@ -68,7 +68,7 @@ namespace Tickets
                 lblNowAdmitting.Text = "" + ticketNumbers.Min() + " - " + ticketNumbers.Max();
         }
 
-        private void updateTitleBar()
+        private void UpdateTitleBar()
         {
             DateTime curTime = DateTime.Now;
             string title = curTime.ToShortTimeString();
@@ -77,7 +77,7 @@ namespace Tickets
             this.Text = title;
         }
 
-        private void generateTimeSlots()
+        private void GenerateTimeSlots()
         {
             // generates array of available time slots
             int mins = options.MinutesPerWindow;
@@ -144,16 +144,28 @@ namespace Tickets
 
         private void btnIssueTicket_Click(object sender, EventArgs e)
         {
-            // first, fetch the next available ticket - null is returned if no more slots available
-            Ticket ticket = GetNextTicket();
-            if (ticket != null)
+            // need a try catch in case the program crashes:
+            try
             {
-                // add it to ticketQueue
-                ticketQueue.Add(ticket);
-                // and also add it to the listbox - pass the ticket object so I can remove it after time expires
-                lstTicketQueue.Items.Add(ticket);
-                // and update the queue summary
-                UpdateQueueSummary();
+                // debugging: throw new Exception();
+                // first, fetch the next available ticket - null is returned if no more slots available
+                Ticket ticket = GetNextTicket();
+                if (ticket != null)
+                {
+                    // add it to ticketQueue
+                    ticketQueue.Add(ticket);
+                    // and also add it to the listbox - pass the ticket object so I can remove it after time expires
+                    lstTicketQueue.Items.Add(ticket);
+                    // and update the queue summary
+                    UpdateQueueSummary();
+                }
+            }
+            catch (Exception ex)
+            {
+                // TODO: show helpful error message instead of stacktrace
+                string msg = ex.Message + "\n======\n" + ex.StackTrace;
+                string caption = ex.GetType().ToString();
+                MessageBox.Show(msg, caption);
             }
         } // end btnIssueTicket
 
@@ -207,7 +219,7 @@ namespace Tickets
                 ticketQueue.Clear();
 
                 // generate a new set of available time slots
-                generateTimeSlots();
+                GenerateTimeSlots();
             }
 
             // no matter what the user says, restart the timer and update queue info
