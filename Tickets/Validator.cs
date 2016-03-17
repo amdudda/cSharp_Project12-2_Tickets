@@ -62,6 +62,12 @@ namespace Tickets
             {
                 anfang = DateTime.Parse(start.Text);
                 endung = DateTime.Parse(end.Text);
+                // there is an edge case after 8pm, where the default "12:xx am" is parsed as "earlier the same day" instead of "the next morning".
+                // MessageBox.Show("anfang hour " + anfang.Hour + " & endung hour " + endung.Hour);
+                if (anfang.Hour >= 20 && endung.Hour <= 4)
+                {
+                    endung = endung.AddDays(1);
+                }
             }
             else return false;  // if this fails, kick user out
             
