@@ -63,7 +63,7 @@ namespace Tickets
                 }
             }
             // update "now admitting" if list of numbers has elements in it
-            // TODO this always says "1-n" when displaying
+            // this always says "1-n" when displaying
             if (ticketNumbers.Count > 0) 
                 lblNowAdmitting.Text = "" + ticketNumbers.Min() + " - " + ticketNumbers.Max();
         }
@@ -162,8 +162,10 @@ namespace Tickets
             }
             catch (Exception ex)
             {
-                // TODO: show helpful error message instead of stacktrace
-                string msg = ex.Message + "\n======\n" + ex.StackTrace;
+                // show helpful error message instead of stacktrace
+                string msg = ex.Message +
+                    "\nPlease contact your IT staff for help in troubleshooting the problem.";
+                    // + "\n======\n" + ex.StackTrace;
                 string caption = ex.GetType().ToString();
                 MessageBox.Show(msg, caption);
             }
@@ -198,7 +200,7 @@ namespace Tickets
         {
             // pause the timer
             timer.Stop();
-            // TODO: warn user data will be cleared.
+            // warn user data will be cleared.
             string msg = "If you continue, the current ticket queue will be emptied and all data will be lost!\n" +
                 "Click [OK] to continue, or [Cancel] to cancel and return to the ticket queue screen.";
             string caption = "Warning: Delete Queue?";

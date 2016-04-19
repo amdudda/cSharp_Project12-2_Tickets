@@ -9,6 +9,7 @@ namespace Tickets
 {
     public static class Validator
     {
+        // IsPresent and IsInteger are copy/pasted from other projects
         public static bool IsPresent(TextBox tbox)
         {
             if (tbox.Text == "")
@@ -81,7 +82,7 @@ namespace Tickets
             // MessageBox.Show(totalMinutes.ToString());
             if (totalMinutes < minuten)
             {
-                // TODO add alert message
+                // add alert message
                 string msg = "Your hours of operation do not allow for at least two batches of tickets.\n" +
                     "Please either reduce the number of minutes per window, or extend your hours of operation.";
                 string caption = "Not enough ticket batches.";
