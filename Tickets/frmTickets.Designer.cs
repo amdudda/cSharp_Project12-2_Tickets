@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblNowAdmitting = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -38,25 +37,18 @@
             this.lstTicketQueue = new System.Windows.Forms.ListBox();
             this.btnOptions = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(174, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "A.M. Dudda - Project 12.2 - Tickets";
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lblNowAdmitting);
-            this.groupBox1.Location = new System.Drawing.Point(13, 17);
+            this.groupBox1.Location = new System.Drawing.Point(13, 32);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(259, 51);
+            this.groupBox1.Size = new System.Drawing.Size(259, 49);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Guests with the following tickets may now enter:";
@@ -75,7 +67,7 @@
             this.groupBox2.Controls.Add(this.btnIssueTicket);
             this.groupBox2.Controls.Add(this.lblNextEntry);
             this.groupBox2.Controls.Add(this.lblTicketsOutstanding);
-            this.groupBox2.Location = new System.Drawing.Point(13, 75);
+            this.groupBox2.Location = new System.Drawing.Point(13, 87);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(259, 94);
             this.groupBox2.TabIndex = 2;
@@ -139,6 +131,24 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(1, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(108, 13);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "Project 12.2 - Tickets";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(1, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(219, 13);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "A.M. Dudda, Ben Hillenbrand, Timmy Milligan";
+            // 
             // frmTickets
             // 
             this.AcceptButton = this.btnIssueTicket;
@@ -146,12 +156,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnExit;
             this.ClientSize = new System.Drawing.Size(284, 391);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btnOptions);
             this.Controls.Add(this.lstTicketQueue);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label1);
             this.Name = "frmTickets";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.frmTickets_Load);
@@ -166,7 +177,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label lblNowAdmitting;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -176,6 +186,8 @@
         private System.Windows.Forms.ListBox lstTicketQueue;
         private System.Windows.Forms.Button btnOptions;
         private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label1;
     }
 }
 

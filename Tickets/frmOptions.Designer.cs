@@ -40,6 +40,7 @@
             this.txtEndTime = new System.Windows.Forms.TextBox();
             this.txtFirstTicket = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -47,9 +48,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(174, 13);
+            this.label1.Size = new System.Drawing.Size(219, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "A.M. Dudda - Project 12.2 - Tickets";
+            this.label1.Text = "A.M. Dudda, Ben Hillenbrand, Timmy Milligan";
             // 
             // label2
             // 
@@ -154,12 +155,22 @@
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(0, 12);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(108, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "Project 12.2 - Tickets";
+            // 
             // frmOptions
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(241, 224);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtFirstTicket);
             this.Controls.Add(this.txtEndTime);
@@ -193,5 +204,6 @@
         private System.Windows.Forms.TextBox txtEndTime;
         private System.Windows.Forms.TextBox txtFirstTicket;
         private System.Windows.Forms.Button btnOK;
+        private System.Windows.Forms.Label label7;
     }
 }
