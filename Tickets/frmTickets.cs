@@ -33,7 +33,7 @@ namespace Tickets
             frmOptions initOptions = new frmOptions();
             options = initOptions.ResetOptions(options);
             GenerateTimeSlots();
-            lblNowAdmitting.Text = "1 - " + options.GuestsPerWindow;
+            lblNowAdmitting.Text = "No tickets have been issued.  Guests will be \nadmitted at their assigned time slot.";  
             // and now we kick off the timer
             timer.Interval = 1000;
             timer.Tick += timer_Elapsed;
@@ -63,7 +63,6 @@ namespace Tickets
                 }
             }
             // update "now admitting" if list of numbers has elements in it
-            // this always says "1-n" when displaying
             if (ticketNumbers.Count > 0) 
                 lblNowAdmitting.Text = "" + ticketNumbers.Min() + " - " + ticketNumbers.Max();
         }
